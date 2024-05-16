@@ -1,11 +1,10 @@
 import { Router } from "express";
 import ProductsManager from "../../dao/ProductMongo.manager.js";
-import { setMaxIdleHTTPParsers } from "http";
 
 const router = Router();
 
 router.get('/products', async (req, res) => {
-    const products = await ProductsManager.get();
+    const products = await ProductsManager.getProducts();
     res.status(200).json(products)
 });
 

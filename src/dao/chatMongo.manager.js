@@ -1,11 +1,14 @@
 import { chatModel } from "../models/chat.model.js";
 
 export default class ChatManager{
-    static get(){
-        return chatModel.find();
+    constructor(){
+        this.chatModel = chatModel
+    }
+    async getChat(){
+        return await chatModel.find();
     }
 
-    static async create(data){
+    async create(data){
         const chat = await chatModel.create(data);
         console.log(`Mensage guardado`);
         return chat;

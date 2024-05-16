@@ -1,0 +1,16 @@
+<div>
+    <h1>Pagina de Productos</h1>
+    {{#each products}}
+        <p>Title: {{this.title}} </p>
+        <p>Description: {{this.description}} </p>
+        <p>Price: {{this.price}} </p>
+        <p>Code: {{this.code}} </p>
+    {{/each}}
+    {{#if hasPrevPage}}
+    <a href="/products?numPage={{prevPage}}">Anterior</a>
+    {{/if}}
+    <label>{{page}}</label>
+    {{#if hasNextPage}}
+    <a href="/products?numPage={{nextPage}}">Siguiente</a>
+    {{/if}}
+</div>
