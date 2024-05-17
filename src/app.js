@@ -9,7 +9,8 @@ import connectDB from './config/index.js'
 import produtsRouter from './routers/api/productsMongo.router.js'
 import cartsRouter from './routers/api/cartsMongo.router.js'
 import chatRouter from './routers//api/chatMongo.router.js'
-import { chatModel } from './models/chat.model.js'
+
+import ChatManager from './dao/chatMongo.manager.js'
 
 const app = express();
 const httpServer = app.listen(8080, () =>{
@@ -33,20 +34,18 @@ app.use('/api', produtsRouter);
 app.use('/api', cartsRouter);
 app.use('/api', chatRouter);
 
-let messages = new chatModel;
+let messages = [];
 
 socketServer.on('connection', socket => {
     console.log('Cliente Conectado');
 
-    socket.on('message', data => {
+    socket.on('message', async (data) => {
         console.log('message data: ', data)
         // guardamos los mensajes
-        messages.push(data);
+        await ChatManager.create(data.user, data.message)
+        messages = await ChatManager.getChat();
+
         // emitimos los mensajes
         socketServer.emit('messageLogs', messages)
     })
 });
-export const newMessageFromDB = data => {
-    messages.push(data);
-    socketServer.emit('messageLogs', messages);
-}

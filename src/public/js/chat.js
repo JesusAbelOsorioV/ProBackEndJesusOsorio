@@ -9,3 +9,7 @@ input.addEventListener('keyup', evt => {
         input.value= ''
     }
 });
+
+socket.on('message_server', data =>{
+    console.log(data)
+})
