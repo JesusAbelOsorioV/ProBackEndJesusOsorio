@@ -6,6 +6,7 @@ import { __dirname } from './utils.js'
 import handlebars from 'express-handlebars'
 import { Server } from 'socket.io'
 import connectDB from './config/index.js'
+import { URI } from './config/index.js'
 import produtsRouter from './routers/api/productsMongo.router.js'
 import cartsRouter from './routers/api/cartsMongo.router.js'
 import chatRouter from './routers//api/chatMongo.router.js'
@@ -28,10 +29,10 @@ app.use(express.static(__dirname+'/public'));
 app.use(cookieParser())
 app.use(session({
     store: MongoStore.create({
-        mongoUrl:'mongodb+srv://abelosorio2001:abel20@clustera.cqyrcmz.mongodb.net/',
+        mongoUrl:URI,
         mongoOptions:{
             useNewUrlParser: true,
-            userUnifiedTopology: true
+            useUnifiedTopology: true
         },
         ttl: 60*60*1000*24
     }),
