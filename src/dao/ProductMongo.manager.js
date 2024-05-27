@@ -8,7 +8,7 @@ export default class ProductsManager {
         const products = await this.productModel.paginate({}, {limit, page: numPage,sort: {title: -1} , lean: true})
         return products
     }
-    async getById(pid){
+    async getProductById(pid){
         const product = await productModel.findById(pid);
         if (!product){
             throw new Error('Producto no encontrado');
@@ -16,17 +16,17 @@ export default class ProductsManager {
         return product;
     }
 
-    async create(data){
+    async createProduct(data){
         const product = await productModel.create(data);
         console.log(`Producto creado correctamente ${product._id}`);
         return product;
     }
-    async updateById(pid, data){
+    async updateProductById(pid, data){
         await productModel.updateOne({ _id: pid }, { $set: data});
         console.log(`Producto actualizado corectamente ${pid}`);
     }
 
-    async delateById(pid){
+    async delateProductById(pid){
         await productModel.deleteOne( { _id: pid });
         console.log(`Producto eliminado correctamente ${pid}`);
     }

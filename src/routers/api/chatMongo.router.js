@@ -4,7 +4,7 @@ import ChatManager from "../../dao/chatMongo.manager.js";
 
 const router = Router();
 
-const chatServise = new ChatManager
+const chatServise = new ChatManager();
 
 router.get('/chat', async (req, res) =>{
      const chat = await chatServise.getChat()

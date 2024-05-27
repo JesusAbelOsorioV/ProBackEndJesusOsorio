@@ -1,6 +1,6 @@
 import cartModel from '../models/carts.model.js';
 
-export default class CartsManager{
+ class CartsManager{
     constructor(){
         this.cartModel = cartModel;
     }
@@ -14,7 +14,7 @@ export default class CartsManager{
         }
         return cart;
     }
-    async create(){
+    async createCart(){
         const cart = await cartModel.create({products: []});
         console.log(`Carrito creado con exito (${cart._id})`);
         return cart;
@@ -46,3 +46,5 @@ export default class CartsManager{
         {new: true}
     )
 }
+
+export default CartsManager;

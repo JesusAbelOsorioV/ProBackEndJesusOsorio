@@ -9,8 +9,11 @@ import connectDB from './config/index.js'
 import produtsRouter from './routers/api/productsMongo.router.js'
 import cartsRouter from './routers/api/cartsMongo.router.js'
 import chatRouter from './routers//api/chatMongo.router.js'
-
+import sessionsRouter from './routers/api/sessions.router.js'
 import ChatManager from './dao/chatMongo.manager.js'
+import cookieParser from 'cookie-parser'
+import session from 'express-session'
+import MongoStore from 'connect-mongo'
 
 const app = express();
 const httpServer = app.listen(8080, () =>{
@@ -22,10 +25,26 @@ const socketServer = new Server(httpServer)
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 app.use(express.static(__dirname+'/public'));
+app.use(cookieParser())
+app.use(session({
+    store: MongoStore.create({
+        mongoUrl:'mongodb+srv://abelosorio2001:abel20@clustera.cqyrcmz.mongodb.net/',
+        mongoOptions:{
+            useNewUrlParser: true,
+            userUnifiedTopology: true
+        },
+        ttl: 60*60*1000*24
+    }),
+    secret: 's3cr3t3cmm',
+    resave: true,
+    saveUninitialized: true
+}));
 
 app.engine('hbs', handlebars.engine({ extname: '.hbs'}));
 app.set('views', __dirname+'/views')
 app.set('view engine', 'hbs')
+
+
 
 connectDB();
 
@@ -33,6 +52,7 @@ app.use('/', viewsRouter);
 app.use('/api', produtsRouter);
 app.use('/api', cartsRouter);
 app.use('/api', chatRouter);
+app.use('api/sessions', sessionsRouter);
 
 let messages = [];
 
