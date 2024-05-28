@@ -55,24 +55,17 @@ router.get('/chat', async (req, res) =>{
     res.render('.chat.hbs',{})
 })
 
-router.get('login', (req, res) =>{
+router.get('/login', (req, res) =>{
     res.render('login')
 })
 router.get('/register', (req, res) =>{
     res.render('register')
 })
 
-router. get('/session', (req, res) =>{
-    if(req.session.counter){
-        req.session.counter++
-        res.send()
-    }
-})
-
 router.get('/logout', (req, res) =>{
     req.session.destroy( err =>{
         if(err) return res.send({ status: 'error', error: err})
-        else return res.send('logout')
+        else return res.render('login')
     })
 })
 

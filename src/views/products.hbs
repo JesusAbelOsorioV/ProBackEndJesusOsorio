@@ -1,5 +1,8 @@
 <div>
-    <p>Bienvenido {{users.first_name}} {{users.rol}}</p>
+    
+    <p>Bienvenido: {{first_name}}</p>
+    <p>Rol:{{rol}}</p>
+    
     <h1>Pagina de Productos</h1>
     {{#each products}}
         <p>Title: {{this.title}} </p>
@@ -7,6 +10,7 @@
         <p>Price: {{this.price}} </p>
         <p>Code: {{this.code}} </p>
     {{/each}}
+    <a href="/logout" class="btn btn-outline-danger w-2">logout</a>
     {{#if hasPrevPage}}
     <a href="/products?numPage={{prevPage}}">Anterior</a>
     {{/if}}
@@ -14,5 +18,5 @@
     {{#if hasNextPage}}
     <a href="/products?numPage={{nextPage}}">Siguiente</a>
     {{/if}}
-    <a href="/api/sessions/logout" class="btn btn-outline-danger w-2"></a>
+    
 </div>

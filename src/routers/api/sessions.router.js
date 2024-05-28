@@ -40,11 +40,12 @@ sessionsRouter.post('/login', async (req, res)=>{
     if(!userFound) return res.status(401).send({status: 'error', erorr: 'usuario o password incorrectos'}) 
     
     req.session.user ={
+        first_name: userFound.first_name,
         email,
         admin: userFound.role === 'admin'
     }
-    
-    res.redirect('/products')
+        
+    res.redirect('/products', userFound.first_name, userFound.role)
 })
 
 sessionsRouter.get('/loguot', (req, res) =>{
@@ -58,4 +59,4 @@ router.get('/current', auth, (req, res) =>{
     res.send('datos sensibles que solo puede ver el admin')
 })
 
-export default router
+export default sessionsRouter

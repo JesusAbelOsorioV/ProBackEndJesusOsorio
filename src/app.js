@@ -53,7 +53,7 @@ app.use('/', viewsRouter);
 app.use('/api', produtsRouter);
 app.use('/api', cartsRouter);
 app.use('/api', chatRouter);
-app.use('api/sessions', sessionsRouter);
+app.use('/api/sessions', sessionsRouter);
 
 let messages = [];
 
