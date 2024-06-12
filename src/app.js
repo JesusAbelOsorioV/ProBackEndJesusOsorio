@@ -29,22 +29,22 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 app.use(express.static(__dirname+'/public'));
 app.use(cookieParser())
-app.use(session({
-    store: MongoStore.create({
-        mongoUrl:URI,
-        mongoOptions:{
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        },
-        ttl: 60*60*1000*24
-    }),
-    secret: 's3cr3t3cmm',
-    resave: true,
-    saveUninitialized: true
-}));
+// app.use(session({
+//     store: MongoStore.create({
+//         mongoUrl:URI,
+//         mongoOptions:{
+//             useNewUrlParser: true,
+//             useUnifiedTopology: true
+//         },
+//         ttl: 60*60*1000*24
+//     }),
+//     secret: 's3cr3t3cmm',
+//     resave: true,
+//     saveUninitialized: true
+// }));
 initPassport()
 app.use(passport.initialize())
-app.use(passport.session())
+// app.use(passport.session())
 
 app.engine('hbs', handlebars.engine({ extname: '.hbs'}));
 app.set('views', __dirname+'/views')

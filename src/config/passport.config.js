@@ -3,50 +3,73 @@ import local from 'passport-local'
 import UserManagerMongo from "../dao/userMongo.manager.js";
 import { createHash, isValidPassword } from "../utils/bcrypt.js";
 import GithubStrategy from 'passport-github2'
+import { ExtractJwt, Strategy } from 'passport-jwt'
+import CartsManager from "../dao/CartMongo.manager.js";
+import { PRIVATE_KEY } from "../utils/jwt.js";
+
+const JWTStrategy = Strategy
+const JWTExtract = ExtractJwt
+
+const cookieExtractor = req =>{
+    let token = null
+    if(req && req.cookies) token = req.cookies['token']
+}
+
 
 const LocalStrategy = local.Strategy
 const userService = new UserManagerMongo()
+const cartService = new CartsManager()
 
 export const initPassport = () =>{
-    passport.use('register', new LocalStrategy({
-        passReqToCallback: true,
-        usernameField: 'email'
-    }, async(req, username, password, done) => {
-        const {first_name, last_name} = req.body
+    passport.use('jwt', new JWTStrategy({
+        jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
+        secretOrKey: PRIVATE_KEY
+    }, async (jwt_payload, done) => {
         try {
-            let userFound = await userService.getUserBy({email: username})
-            if(userFound) {
-                console.log('el user ya existe')
-                return done(null, false)
-            }
-            let newUser ={
-                first_name,
-                last_name,
-                email: username,
-                password: createHash(password)
-            }
-            let result = await userService.createUser(newUser)
-            return done(null, result)
-        } catch (error) {
-            return done('error al registar el usuario' +error)
-        }
-    }))
-
-    passport.use('login', new LocalStrategy({
-        usernameField: 'email'
-    }, async(username, password, done) =>{
-        try {
-            const user = await userService.getUserBy({email: username})
-            if (!user) {
-               console.log('usuario no encontrado')
-               return done(null, false) 
-            }
-            if (!isValidPassword(password, user)) 
-            return done(null, user)
+         return done(null, jwt_payload)   
         } catch (error) {
             return done(error)
         }
     }))
+    // passport.use('register', new LocalStrategy({
+    //     passReqToCallback: true,
+    //     usernameField: 'email'
+    // }, async(req, username, password, done) => {
+    //     const {first_name, last_name} = req.body
+    //     try {
+    //         let userFound = await userService.getUserBy({email: username})
+    //         if(userFound) {
+    //             console.log('el user ya existe')
+    //             return done(null, false)
+    //         }
+    //         let newUser ={
+    //             first_name,
+    //             last_name,
+    //             email: username,
+    //             password: createHash(password)
+    //         }
+    //         let result = await userService.createUser(newUser)
+    //         return done(null, result)
+    //     } catch (error) {
+    //         return done('error al registar el usuario' +error)
+    //     }
+    // }))
+
+    // passport.use('login', new LocalStrategy({
+    //     usernameField: 'email'
+    // }, async(username, password, done) =>{
+    //     try {
+    //         const user = await userService.getUserBy({email: username})
+    //         if (!user) {
+    //            console.log('usuario no encontrado')
+    //            return done(null, false) 
+    //         }
+    //         if (!isValidPassword(password, user)) 
+    //         return done(null, user)
+    //     } catch (error) {
+    //         return done(error)
+    //     }
+    // }))
 
     passport.use('github', new GithubStrategy({
         clientID:'Iv23liCm5PPynrw04h4x',

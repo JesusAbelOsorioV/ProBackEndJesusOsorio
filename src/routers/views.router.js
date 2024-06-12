@@ -63,11 +63,8 @@ router.get('/register', (req, res) =>{
 })
 
 router.get('/logout', (req, res) =>{
-    req.session.destroy( err =>{
-        if(err) return res.send({ status: 'error', error: err})
-        else return res.render('login')
-    })
+    res.clearCookie('token')
+    return res.redirect('/login')
 })
-
 
 export default router
