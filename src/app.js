@@ -17,10 +17,15 @@ import session from 'express-session'
 import MongoStore from 'connect-mongo'
 import passport from 'passport'
 import { initPassport } from './config/passport.config.js'
+import { objectConfig } from './config/index.js'
 
 const app = express();
-const httpServer = app.listen(8080, () =>{
-    console.log('Servidor corriendo en el puerto 8080');
+
+const { port } = objectConfig
+
+
+const httpServer = app.listen(port, () =>{
+    console.log(`Servidor corriendo en el puerto ${port}`);
 });
 
 const socketServer = new Server(httpServer)

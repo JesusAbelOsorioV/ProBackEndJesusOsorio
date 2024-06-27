@@ -1,6 +1,19 @@
 import {connect} from 'mongoose'
+import dotenv from 'dotenv'
+import { program } from '../utils/commander.js'
 
-export const URI = 'mongodb+srv://abelosorio2001:abel20@clustera.cqyrcmz.mongodb.net/';
+const { mode } = program.opts()
+dotenv.config({
+    path: mode === 'production' ? './.env' : './.env.development'
+})
+
+export const objectConfig = {
+    port: process.env.PORT || 300,
+    mongo_url : process.env.MONGO_URL,
+    jwt_private_key: process.env.JWT_PRIVATE_KEY
+}
+export const URI = process.env.MONGO_URL
+// export const URI = 'mongodb+srv://abelosorio2001:abel20@clustera.cqyrcmz.mongodb.net/';
 
  const connectDB = async () =>{
     try {
@@ -12,11 +25,3 @@ export const URI = 'mongodb+srv://abelosorio2001:abel20@clustera.cqyrcmz.mongodb
 }
 
 export default connectDB;
-
-
-// const connectDB = () =>{
-//     connect('mongodb+srv://abelosorio2001:abel20@clustera.cqyrcmz.mongodb.net/')
-//     console.log('DB Conected');
-// }
-
-// export default connectDB;

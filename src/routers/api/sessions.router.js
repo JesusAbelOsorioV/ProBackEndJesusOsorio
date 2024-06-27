@@ -74,7 +74,7 @@ sessionsRouter.get('/loguot', (req, res) =>{
     return res.redirect('/login')
 })
 
-router.get('/current', passportCall('jwt') , authorization('admin'), (req, res) =>{
+sessionsRouter.get('/current', passportCall('jwt') , authorization('admin'), (req, res) =>{
     res.send('datos sensibles que solo puede ver el admin')
 })
 
