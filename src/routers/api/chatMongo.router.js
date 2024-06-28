@@ -1,20 +1,13 @@
 import { Router } from "express";
-import ChatManager from "../../dao/chatMongo.manager.js";
-
+import ChatController from "../../controllers/chat.controller.js";
 
 const router = Router();
+const {
+    getMessage,
+    createMessage
+} = new ChatController()
+router.get('/chat', getMessage);
 
-const chatServise = new ChatManager();
-
-router.get('/chat', async (req, res) =>{
-     const chat = await chatServise.getChat()
-    res.render('chat', chat);
-});
-
-router.post('/chat', async (req, res) =>{
-    const {user, message} = req.body;
-   const newMsj= await chatServise.create(user, message)
-    res.status(201).json(newMsj);
-});
+router.post('/chat', createMessage);
 
 export default router;
