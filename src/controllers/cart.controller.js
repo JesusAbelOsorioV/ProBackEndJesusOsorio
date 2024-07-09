@@ -60,8 +60,37 @@ class CartController {
             const productProcess = []
             const productsSinProcesar = []
             let totalA = 0
+            for (const item of cart.products) {
+                const product = await productService.getProduct(item.product);
+                if (!product) {
+                    throw new Error(`Producto con ID ${item.product} no encontrado`);
+                }
+                if (product.stock >= item.quantity) {
+                    productProcess.push(item);
+                    totalA += product.price * item.quantity;
+                } else {
+                    productsSinProcesar.push(item);
+                }
+            }
             
+            const unCode = await this.createUnCode();
+            const newTicket = {
+                code: String(unCode),
+                purchase_datetime: new Date(),
+                amount: totalA,
+                purchaser: user.email
+            };
+            const createdTicket = await this.ticketService.createTicket(newTicket);
+           
+            for (const item of productProcess) {
+                await this.productService.updateProductById(item.product, { stock: -item.quantity });
+            }
 
+            cart.products = productsSinProcesar;
+            await this.cartService.updateCart(cart._id, cart.products);
+
+            return res.status(200).send({ status: 'success', payload: createdTicket });
+       
         }
 }
 
