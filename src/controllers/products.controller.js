@@ -3,9 +3,14 @@ class ProductController {
     constructor(){
         this.productService = productService
     }
-    getProducts = async (req, res) => {
-            const {products} = await productService.getProducts();
-            res.status(200).json(products)
+        getProducts = async (req, res) => {
+        try {
+           const {products} = await productService.getProducts();
+            res.status(200).json(products) 
+        } catch (error) {
+           console.log(error) 
+        }
+            
         }
         getProduct = async (req, res) =>{
             const {pid} = req.params;

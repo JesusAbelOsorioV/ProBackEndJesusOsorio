@@ -2,6 +2,9 @@ import { Router } from "express";
 import ProductManager from "../dao/ProductManager.js";
 import ProductsManagerMongo from "../dao/ProductMongo.manager.js";
 import CartsManagerMongo from "../dao/CartMongo.manager.js"
+import passportCall from "../middlewares/passportCall.middlewares.js";
+import authorization from "../middlewares/authorization.middleware.js";
+import { ticketService } from "../service/service.js";
 
 const productsService = new ProductsManagerMongo();
 const cartService = new CartsManagerMongo();
@@ -23,7 +26,7 @@ router.get('/realTimeProducts', async (req, res) =>{
     })
 })
 
-router.get('/products', async (req, res) =>{
+router.get('/products', passportCall('jwt'), authorization('admin', 'user'),async (req, res) =>{
     const {numPage, limit} = req.query
     
     const {docs, page, hasPrevPage, hasNextPage, prevPage, nextPage } = await productsService.getProducts({ limit, numPage})
@@ -38,21 +41,30 @@ router.get('/products', async (req, res) =>{
     })
 })
 
-router.get('/product/:pid', async (req, res) =>{
+router.get('/product/:pid', passportCall('jwt'), authorization('admin', 'user'), async (req, res) =>{
     const {pid} = req.params;
     const product = await productsService.getProductById(pid);
     const cartId = ''
     res.render('./products.hbs', {product, cartId})
 })
 
-router.get('/cart/:cid', async (req, res) =>{
+router.get('/cart/:cid', passportCall('jwt'), authorization('admin', 'user'), async (req, res) =>{
     const {cid} = req.params;
     const cart = await cartService.getCartBy(cid);
     res.render('./cart.hbs', {cart})
 })
 
-router.get('/chat', async (req, res) =>{
+router.get('/chat', passportCall('jwt'), authorization('admin', 'user'), async (req, res) =>{
     res.render('.chat.hbs',{})
+})
+
+router.get('/user', async (req, res) =>{
+    res.render('user')
+})
+router.get('/ticket/:tid', async (req, res) =>{
+    const { tid } = req.params
+    const ticket = await ticketService.getTicketBy({ _id: tid})
+    res.render('ticket', {ticket})
 })
 
 router.get('/login', (req, res) =>{

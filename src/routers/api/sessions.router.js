@@ -8,6 +8,7 @@ import { createHash, isValidPassword } from "../../utils/bcrypt.js";
 import { generateToken } from "../../utils/jwt.js";
 import  passportCall  from "../../middlewares/passportCall.middlewares.js";
 import authorization  from "../../middlewares/authorization.middleware.js";
+import { sendEmail } from "../../utils/sendEmail.js";
 
 const sessionsRouter = Router()
 
@@ -76,6 +77,15 @@ sessionsRouter.get('/loguot', (req, res) =>{
 
 sessionsRouter.get('/current', passportCall('jwt') , authorization('admin'), (req, res) =>{
     res.send('datos sensibles que solo puede ver el admin')
+})
+
+sessionsRouter.get('/mail', async (req, res) =>{
+    try {
+        sendEmail()
+        res.send ('email enviado')
+    } catch (error) {
+        console.log(error);
+    }
 })
 
 export default sessionsRouter

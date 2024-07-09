@@ -20,4 +20,7 @@ export default class UserManagerMongo{
     async getUserByEmail(email){
         return this.userModel.find((user) => user.email === email);
     }
+    async updateUser(uid, updateUser){
+        return this.userModel.updateOne(uid, {$set: updateUser})
+    }
 }
