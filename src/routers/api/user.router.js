@@ -6,13 +6,13 @@ const{
     createUser,
     getUsers,
     getUserBy,
-    updateUser
+    userUpdate
 
-} = UserController()
+} = new UserController()
 
 router.post('/user', createUser)
 router.get('/user', getUsers)
 router.get('/user/:uid', getUserBy)
-router.put('/user/:uid', updateUser)
+router.put('/user/:uid', userUpdate)
 
 export default router;

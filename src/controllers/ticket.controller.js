@@ -1,6 +1,6 @@
 import { ticketService, cartService, userService } from "../service/service.js";
 
-export class TicketController{
+class TicketController{
     constructor(){
         this.ticketService = ticketService;
         this.cartService = cartService;
@@ -41,3 +41,4 @@ export class TicketController{
         ticketService.delateTicket(tid)
     }
 }
+export default TicketController
