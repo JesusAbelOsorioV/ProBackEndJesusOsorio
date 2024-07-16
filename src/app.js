@@ -12,6 +12,7 @@ import MongoStore from 'connect-mongo'
 import passport from 'passport'
 import { initPassport } from './config/passport.config.js'
 import { objectConfig } from './config/index.js'
+import { handleErrors } from './middlewares/errors.middleware.js'
 
 const app = express();
 
@@ -32,6 +33,7 @@ initPassport()
 app.use(passport.initialize())
 
 app.use(routerApp)
+app.use(handleErrors)
 app.engine('hbs', handlebars.engine({ extname: '.hbs'}));
 app.set('views', __dirname+'/views')
 app.set('view engine', 'hbs')
