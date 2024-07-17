@@ -3,11 +3,11 @@ import MockingProductController from "../../controllers/mockingproducts.controll
 
 const router = Router();
 const {
-    getMokingProducts,
-    createMokingProducts
+    getMockingProducts,
+    createMockingProducts
 } = new MockingProductController()
 
-router.get('/products', getMokingProducts);
-router.post('/products', createMokingProducts);
+router.get('/products', getMockingProducts);
+router.post('/products', createMockingProducts);
 
 export default router;
