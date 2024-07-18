@@ -5,6 +5,7 @@ import CartsManagerMongo from "../dao/CartMongo.manager.js"
 import passportCall from "../middlewares/passportCall.middlewares.js";
 import authorization from "../middlewares/authorization.middleware.js";
 import { ticketService } from "../service/service.js";
+import generateMockProducts from "../utils/generateMockProducts.js";
 
 const productsService = new ProductsManagerMongo();
 const cartService = new CartsManagerMongo();
@@ -17,7 +18,13 @@ router.get('/', (req, res) =>{
     })
 });
 
-
+// router.get('/mock/products', (req, res) =>{
+//     let products = []
+//     for (let i = 0; i <100; i++){
+//         products.push(generateMockProducts())
+//     }
+//     res.send({status:'success', payload:products})
+// })
 
 router.get('/realTimeProducts', async (req, res) =>{
     const productManager = new ProductManager('../Products.json')

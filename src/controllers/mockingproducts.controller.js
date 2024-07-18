@@ -1,15 +1,28 @@
 import { productService } from "../service/service.js";
+import generateMockProducts from "../utils/generateMockProducts.js";
 class MockingProductController {
     constructor(){
         this.productService = productService
     }
-        getMockingProducts = async (req, res) => {
+
+    getMockingProducts = async (req, res) => {
         try {
-           const {products} = await productService.getProducts();
-            res.status(200).json(products) 
+            let products = []
+            for (let i = 0; i <50; i++){
+                products.push(generateMockProducts())
+            }
+            res.send({status:'success', payload:products}) 
         } catch (error) {
            console.log(error) 
         }
+    
+        // getMockingProducts = async (req, res) => {
+        // try {
+        //    const {products} = await productService.getProducts();
+        //     res.status(200).json(products) 
+        // } catch (error) {
+        //    console.log(error) 
+        // }
             
         }
         

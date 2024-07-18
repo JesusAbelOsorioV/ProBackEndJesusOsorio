@@ -15,7 +15,7 @@ const {
 
 router.get('/carts', getCarts);
 router.get('/carts/:cid', getCart);
-router.get('/carts/purchase', passportCall('jwt') ,purchase)
+router.get('/carts/:cid/purchase', passportCall('jwt') ,purchase)
 router.post('/carts', createCart);
 router.put('/carts/:cid/products/pid', uptdateCart);
 router.delete('/carts/:cid/products/pid', deleteProductFromCart)
