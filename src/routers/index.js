@@ -17,10 +17,10 @@ router.use('/api/sessions', sessionsRouter);
 router.use('/api', userRouter);
 router.use('/api', ticketRouter)
 router.use('/api/mock', mockingRouter)
-router.use((error, req, res, next) => {
-    console.log(error);
-    res.status(500).send('Error 500 en el server');
-    return next();
-});
+// router.use((error, req, res, next) => {
+//     console.log(error);
+//     res.status(500).send('Error 500 en el server');
+//     return next();
+// });
 
 export default router

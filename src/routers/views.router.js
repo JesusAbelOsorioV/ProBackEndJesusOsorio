@@ -86,5 +86,10 @@ router.get('/logout', (req, res) =>{
     return res.redirect('/login')
 })
 
+router.get('/loggerTest', (req, res) =>{
+    req.logger.warning('Alerta')
+    res.send('logs')
+})
+
 
 export default router

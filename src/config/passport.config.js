@@ -6,6 +6,7 @@ import GithubStrategy from 'passport-github2'
 import { ExtractJwt, Strategy } from 'passport-jwt'
 import CartsManager from "../dao/CartMongo.manager.js";
 import { PRIVATE_KEY } from "../utils/jwt.js";
+import { logger } from "../utils/logger.js";
 
 const JWTStrategy = Strategy
 const JWTExtract = ExtractJwt
@@ -77,7 +78,7 @@ export const initPassport = () =>{
         callbackURL:'http://localhost:8080/api/sessions/githubcallback'
     }, async (accesToken, refreshToken, profile, done)=>{
         try {
-            console.log(profile)
+            logger.info(profile)
             let user = await userService.getUserBy({email: profile._json.email})
             if(!user){
                 let newUser = {

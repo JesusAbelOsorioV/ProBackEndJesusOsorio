@@ -1,4 +1,5 @@
 import { productModel } from "../models/products.model.js";
+import { logger } from "../utils/logger.js";
 
 export default class ProductsManager {
     constructor(){
@@ -28,7 +29,7 @@ export default class ProductsManager {
 
     async delateProductById(pid){
         await productModel.deleteOne( { _id: pid });
-        console.log(`Producto eliminado correctamente ${pid}`);
+        logger.info(`Producto eliminado correctamente ${pid}`);
     }
 }
 

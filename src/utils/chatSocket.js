@@ -1,11 +1,12 @@
+import { logger } from "./logger";
 
 let messages = [];
 
 socketServer.on('connection', socket => {
-    console.log('Cliente Conectado');
+    logger.info('Cliente Conectado');
 
     socket.on('message', async (data) => {
-        console.log('message data: ', data)
+        logger.info('message data: ', data)
         // guardamos los mensajes
         await ChatManager.create(data.user, data.message)
         messages = await ChatManager.getChat();

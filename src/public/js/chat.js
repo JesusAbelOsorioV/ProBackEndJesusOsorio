@@ -1,3 +1,5 @@
+import { logger } from "../../utils/logger";
+
 const socket = io()
 
 const input = document.getElementById('message')
@@ -11,5 +13,5 @@ input.addEventListener('keyup', evt => {
 });
 
 socket.on('message_server', data =>{
-    console.log(data)
+    logger.info(data)
 })

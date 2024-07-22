@@ -1,4 +1,5 @@
 import cartModel from '../models/carts.model.js';
+import { logger } from '../utils/logger.js';
 
  class CartsManager{
     constructor(){
@@ -16,7 +17,7 @@ import cartModel from '../models/carts.model.js';
     }
     async createCart(){
         const cart = await cartModel.create({products: []});
-        console.log(`Carrito creado con exito (${cart._id})`);
+        logger.info(`Carrito creado con exito (${cart._id})`);
         return cart;
     }
     async updateCart(cid, pid){

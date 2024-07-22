@@ -1,6 +1,7 @@
 import {connect} from 'mongoose'
 import dotenv from 'dotenv'
 import { program } from '../utils/commander.js'
+import { logger } from '../utils/logger.js'
 
 const { mode } = program.opts()
 dotenv.config({
@@ -20,9 +21,9 @@ export const URI = process.env.MONGO_URL
  const connectDB = async () =>{
     try {
         await connect(URI);
-        console.log('DB Conected')
+        logger.info('DB Conected')
     } catch (error) {
-        console.error('Erorr to connect to DB', error.message);
+        logger.error('Erorr to connect to DB', error.message);
     }
 }
 

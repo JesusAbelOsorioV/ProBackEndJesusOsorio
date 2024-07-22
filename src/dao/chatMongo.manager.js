@@ -1,4 +1,5 @@
 import { chatModel } from "../models/chat.model.js";
+import { logger } from "../utils/logger.js";
 
 export default class ChatManager{
     constructor(){
@@ -10,7 +11,7 @@ export default class ChatManager{
 
     async create(data){
         const chat = await chatModel.create(data);
-        console.log(`Mensage guardado`);
+        logger.info(`Mensage guardado`);
         return chat;
     }
 }

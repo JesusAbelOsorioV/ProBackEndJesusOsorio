@@ -9,6 +9,7 @@ import { generateToken } from "../../utils/jwt.js";
 import  passportCall  from "../../middlewares/passportCall.middlewares.js";
 import authorization  from "../../middlewares/authorization.middleware.js";
 import { sendEmail } from "../../utils/sendEmail.js";
+import { logger } from "../../utils/logger.js";
 
 const sessionsRouter = Router()
 
@@ -84,7 +85,7 @@ sessionsRouter.get('/mail', async (req, res) =>{
         sendEmail()
         res.send ('email enviado')
     } catch (error) {
-        console.log(error);
+        logger.error(error);
     }
 })
 

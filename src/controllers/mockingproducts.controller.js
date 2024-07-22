@@ -1,5 +1,6 @@
 import { productService } from "../service/service.js";
 import generateMockProducts from "../utils/generateMockProducts.js";
+import { logger } from "../utils/logger.js";
 class MockingProductController {
     constructor(){
         this.productService = productService
@@ -13,7 +14,7 @@ class MockingProductController {
             }
             res.send({status:'success', payload:products}) 
         } catch (error) {
-           console.log(error) 
+           logger.error(error) 
         }
     
         // getMockingProducts = async (req, res) => {
