@@ -6,6 +6,8 @@ import passportCall from "../middlewares/passportCall.middlewares.js";
 import authorization from "../middlewares/authorization.middleware.js";
 import { ticketService } from "../service/service.js";
 import generateMockProducts from "../utils/generateMockProducts.js";
+import jwt from 'jsonwebtoken'
+import { logger } from "../utils/logger.js";
 
 const productsService = new ProductsManagerMongo();
 const cartService = new CartsManagerMongo();
@@ -89,6 +91,31 @@ router.get('/logout', (req, res) =>{
 router.get('/loggerTest', (req, res) =>{
     req.logger.warning('Alerta')
     res.send('logs')
+})
+
+router.get('/recovery-password', async (req, res) =>{
+    res.render('recoveryPassword')
+})
+
+router.get('/reset-password', async (req, res) =>{
+    const token = req.query.token
+
+    if(!token){
+        return res.render('recoveryPassword')
+    }
+
+    try {
+        const tokenVerif = jwt.verify(token, JWT_PRIVATE_KEY)
+        logger.info('token:', tokenVerif)
+        res.render('resetPassword')
+    } catch (error) {
+        logger.error('token expirado:', error)
+        res.render('recoveryPassword')
+    }
+})
+
+router.get('/create-Products', passportCall('jwt'), authorization('premium', 'admin'), async (req, res) =>{
+    res.render('./createProducts')
 })
 
 

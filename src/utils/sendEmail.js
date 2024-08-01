@@ -11,11 +11,17 @@ const transport = nodemeiler.createTransport({
     }
 })
 
-export const sendEmail = async () =>{
-    return await transport.sendMail({
+export const sendRecoveryPass = async ({email, subject, html}) =>{
+    try{
+     const sendEmail = await transport.sendMail({
         from: 'Ecommers correo<josorio2094@gmail.com>',
-        to: 'abelosorio2001@gmail.com',
-        subject: 'Ecommers Jesus Osorio',
-        html: `<div>Email de Ecommers Jesus</div>`
+        to: email,
+        subject,
+        html
     })
+    console.info('Email enviado: ', sendEmail.response )   
+    }catch(error){
+        console.error('error al enviar email:', error)
+    }
+    
 }
