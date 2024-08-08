@@ -1,0 +1,30 @@
+# path:
+#   /api/carts/:
+#   get:
+#     summary: obtine el carrito de un usuario
+#     tags:
+#       - Carts
+#     responses: 
+#       "200":
+#         description: el carrito fue obtenido correctamente de la base de datos
+#       "500":
+#         description: Error interno del servidor, generado por una query defectuosa o falla en la conexion con la BD
+# components:
+#   schemas:
+#     Cart:
+#       type: object
+#       properties:
+#         _idCart:
+#           type: ObjectId
+#           description: Id autogenerado de Mongo
+#         _idProduct:
+#           type: ObjectId
+#           description: Id del producto
+#         quantity:
+#           type: Number
+#           description: cantidad de productos
+        
+#       example:
+#         _idCart: ObjectId('saldfnh64564asdf')
+#         _idProduct: ObjectId('asjnla33ljaslkc')
+#         quantity: 2

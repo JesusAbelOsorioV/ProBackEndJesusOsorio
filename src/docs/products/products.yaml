@@ -1,0 +1,114 @@
+paths:
+  /api/products/:
+    get:
+      summary: obtine todos los productos
+      tags:
+        - Products
+      responses: 
+        "200":
+          description: los productos fueron obtenidos correctamente de la base de datos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Product'
+      "500":
+          description: Error interno del servidor, generado por una query defectuosa o falla en la conexion con la BD.
+  /api/products:
+    post:
+      summary: Crea un producto nuevo
+      tags:
+        - Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/requestBodies/createProduct'
+      responses:
+        "201":
+          description: El producto fue creado correctamente
+  /api/products/{pid}/:
+    get:
+      summary: obtiene un producto por id
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: id del producto que desea solicitar
+          schema:
+            $type: String
+      responses:
+        "200":
+          descrption : usuario encontrado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/Product'
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: Id autogenerado de Mongo
+        title:
+          type: String
+          description: titulo del producto
+        description:
+          type: String
+          description: descripcion del producto
+        price:
+          type: Number
+          description: valor del producto
+        thumbnail:
+          type: String
+          description: pequeña imagen del producto
+        code:
+          type: String
+          description: codigo alfanumerico del producto
+        stock:
+          type: Number
+          description: cantidad disponible del producto
+      example:
+        _id: ObjectId('saldfnh64564asdf')
+        title: titulo de ejemplo
+        description: descripcion ejemplo del producto
+        price: 350
+        thumbnail: ejemplo-img.jpg
+        code: ASER554
+        stock: 12
+  requestBodies:
+    createProduct:
+      type: object
+      properties:
+        title:
+          type: String
+          description: titulo del producto
+        description:
+          type: String
+          description: descripcion del producto
+        price:
+          type: Number
+          description: valor del producto
+        thumbnail:
+          type: String
+          description: pequeña imagen del producto
+        code:
+          type: String
+          description: codigo alfanumerico del producto, debe ser unico
+        stock:
+          type: Number
+          description: cantidad disponible del producto
+      example:
+        title: titulo de ejemplo
+        description: descripcion ejemplo del producto
+        price: 350
+        thumbnail: ejemplo-img.jpg
+        code: ASER554
+        stock: 12
