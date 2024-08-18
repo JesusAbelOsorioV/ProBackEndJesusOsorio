@@ -20,13 +20,6 @@ router.get('/', (req, res) =>{
     })
 });
 
-// router.get('/mock/products', (req, res) =>{
-//     let products = []
-//     for (let i = 0; i <100; i++){
-//         products.push(generateMockProducts())
-//     }
-//     res.send({status:'success', payload:products})
-// })
 
 router.get('/realTimeProducts', async (req, res) =>{
     const productManager = new ProductManager('../Products.json')

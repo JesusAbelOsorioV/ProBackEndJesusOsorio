@@ -9,6 +9,10 @@ export default class ProductsManager {
         const products = await this.productModel.paginate({}, {limit, page: numPage,sort: {title: -1} , lean: true})
         return products
     }
+	getAll = async() =>{
+		const products = await this.productModel.find()
+		return products
+	}
     async getProductById(pid){
         const product = await productModel.findById(pid);
         if (!product){
