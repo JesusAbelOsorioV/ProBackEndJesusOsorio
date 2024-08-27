@@ -13,9 +13,11 @@ import passport from 'passport'
 import { initPassport } from './config/passport.config.js'
 import { objectConfig } from './config/index.js'
 import { handleErrors } from './middlewares/errors.middleware.js'
-import { addLogger, logger } from './utils/logger.js'
+import { logger } from './utils/logger.js'
 import swaggerJsDoc from 'swagger-jsdoc'
 import swaggerUiExpress from 'swagger-ui-express'
+import { loggerMidw } from './middlewares/logger.middleware.js'
+import { swaggerOptions } from './config/swagger.config.js'
 const app = express();
 
 const { port } = objectConfig
@@ -26,22 +28,11 @@ const httpServer = app.listen(port, () =>{
 
 const socketServer = new Server(httpServer)
 
-const swaggerOptions ={
-    definition: {
-        openapi: '3.0.1',
-        info:{
-            title: 'Documentación de ecommers Jesus Osorio',
-            description: 'API para documentar app ecommers Jesus Osorio'
-        }
-    },
-    apis: [`${__dirname}/docs/**/*.yaml`]
-}
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 app.use(express.static(__dirname+'/public'));
 app.use(cookieParser())
-app.use(addLogger)
+app.use(loggerMidw)
 initPassport()
 app.use(passport.initialize())
 

@@ -63,6 +63,9 @@ router.get('/chat', passportCall('jwt'), authorization('admin', 'user'), async (
 router.get('/user', async (req, res) =>{
     res.render('user')
 })
+router.get('/users', async (req, res) =>{
+    res.render('users')
+})
 router.get('/ticket/:tid', async (req, res) =>{
     const { tid } = req.params
     const ticket = await ticketService.getTicketBy({ _id: tid})

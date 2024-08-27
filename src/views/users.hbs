@@ -1,0 +1,34 @@
+<section>
+  <div>
+    <h1>Datos del usuario</h1>
+    <div id="user-details" data-uid="{{this._id}}">
+      <p>Nombre: {{this.fullName}}</p>
+      <p>Edad: {{this.age}}</p>
+      <p>Email: {{this.email}}</p>
+      <p>Rol: <span id="role-{{this._id}}">{{this.role}}</span></p>
+    </div>
+  </div>
+</section>
+<form id="uploadProfileFiles" method="POST" enctype="multipart/form-data" class="form-group w-100">
+  <div class="container">
+    <label for="profile">Subir Foto de Perfil</label>
+    <input type="file" name="profile" class="form-control">
+    <button type="submit">Subir Foto</button>
+</form>
+</div>
+
+<form id="uploadProductsFiles" method="POST" enctype="multipart/form-data" class="form-group w-100">
+  <div class="container">
+    <label for="products">Subir Imagen de Producto</label>
+    <input type="file" name="products" class="form-control">
+    <button type="submit">Subir Imagen</button>
+</form>
+</div>
+<div class="container">
+  <form id="uploadDocumentsFiles" method="POST" enctype="multipart/form-data" class="form-group w-100">
+    <label for="documents">Documentos Personales</label>
+    <input type="file" name="documents" class="form-control">
+    <button type="submit">Subir Documentos</button>
+  </form>
+</div>
+</section>

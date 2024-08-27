@@ -19,6 +19,19 @@ import { userService } from "../service/service.js";
         const resul = await userService.createUser(body)
         res.send({ status: 'success', payload: resul})
     }
+
+    uploadDocument = async () =>{
+        const { uid } = req.params
+        const archivos = req.archivos
+
+        try {
+            const archivoSubir = await userService.uploadDocument(uid, archivos)
+            res.status(200).send({ status: 'success', payload: `El archivo se subio: ${archivoSubir}`})
+        } catch (error) {
+            res.status(500).send({ status: 'Error', message: error.message})
+        }
+        
+    }
     userUpdate = async (req, res) =>{
         const { uid } = req.params;
         const { first_name, last_name, password } = req.body;
