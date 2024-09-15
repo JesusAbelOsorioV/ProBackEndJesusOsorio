@@ -1,6 +1,6 @@
 import express from 'express'
 import routerApp from './routers/index.js'
-import { __dirname } from './utils.js'
+import __dirname from './utils.js'
 import handlebars from 'express-handlebars'
 import { Server } from 'socket.io'
 import connectDB from './config/index.js'

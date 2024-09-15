@@ -1,7 +1,7 @@
 import sendEmail from './sendEmail.js'
 import { logger } from './logger.js'
 import { userService } from '../service/service.js'
-import { __dirname } from '../utils.js'
+import __dirname from '../utils.js'
 import connectDB from '../config/index.js'
 
 const timeToRemove = 1000 * 60 * 60 * 24 * 2;

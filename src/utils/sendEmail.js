@@ -1,7 +1,9 @@
 import nodemeiler from 'nodemailer'
 import { objectConfig } from '../config/index.js'
+import { logger } from './logger.js'
 
 const { gmail_user, gmail_pass } = objectConfig
+
 const transport = nodemeiler.createTransport({
     service:'gmail',
     port: 587,
@@ -11,7 +13,7 @@ const transport = nodemeiler.createTransport({
     }
 })
 
-export const sendRecoveryPass = async ({email, subject, html}) =>{
+const sendRecoveryPass = async ({email, subject, html}) =>{
     try{
      const sendEmail = await transport.sendMail({
         from: 'Ecommers correo<josorio2094@gmail.com>',
@@ -25,3 +27,5 @@ export const sendRecoveryPass = async ({email, subject, html}) =>{
     }
     
 }
+
+export default sendRecoveryPass;
