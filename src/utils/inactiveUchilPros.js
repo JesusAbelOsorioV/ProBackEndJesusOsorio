@@ -1,6 +1,6 @@
 import { fork } from "child_process";
 import { logger } from "./logger.js";
-import __dirname from "../utils.js";
+import { __dirname } from "../utils.js";
 
 export const inactUserProcess = () => {
     const childScript = `${__dirname}/utils/removeInacUsers.js`;
