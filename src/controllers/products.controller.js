@@ -30,8 +30,18 @@ class ProductController {
         }
         delateProducts =async (req, res) =>{
             const {pid} = req.params;
-            await productService.delateProductById(pid);
-            res.status(204).end();
+            const user = req.user;
+            try {
+                const productFound = await productService.getProductById({_id: pid})
+                if(!productFound) return res.status(400).send({ status: 'error', error: `No exixte ningun producto con Id:${pid}`})
+                    if (user.role === 'premium' && productFound.owner !== user.email) return res.status(401).send({ status: 'error', error: `el producto ${productFound.title} no pertenece a ${user.email}, y no puede eliminarlo` });
+
+                await productService.delateProductById(pid);
+                res.status(200).send({ status: 'success', payload: productFound });
+    
+            } catch (error) {
+                res.status(500).send({ status: 'error', error: `Error al borrar el producto: ${error.message}` });
+            }
         }
 }
 export default ProductController
