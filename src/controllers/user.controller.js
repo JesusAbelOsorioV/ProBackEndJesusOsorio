@@ -1,4 +1,4 @@
-import { userService } from "../service/service.js";
+import { cartService, userService } from "../service/service.js";
 
  export class UserController {
     constructor(){
@@ -60,6 +60,18 @@ import { userService } from "../service/service.js";
             res.status(200).send({ status: 'success', message: `Usuario actualizado ${result}` });
 
         
+    }
+    deleteUser = async (req, res)=>{
+        const {uid} = req.params;
+        try {
+            const userFound = await this.userService.getUserBy({_id: uid})
+            const cid = userFound.cart
+            await cartService.deleteCart({_id: cid})
+            const resul = await this.userService.delateUser({_id: uid})
+            res.send({ status: 'success', payload: `user: ${resul} deleted`})
+        } catch (error) {
+            res.status(500).send({status: 'Error', message: `Error al borrar el usurairo: ${error.message}`})
+        }
     }
     updateRole = async (req, res) => {
         const { uid } = req.params;

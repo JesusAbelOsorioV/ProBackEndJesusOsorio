@@ -11,7 +11,8 @@ const{
     getUsers,
     getUserBy,
     userUpdate,
-    updateRole
+    updateRole,
+    deleteUser
 
 } = new UserController()
 
@@ -21,5 +22,6 @@ router.get('/user', getUsers)
 router.get('/user/:uid', getUserBy)
 router.put('/user/:uid', passportCall('jwt') ,authorization('admin', 'premium') ,userUpdate)
 router.put('/user/premium/:uid', updateRole)
+router.delete('/user/:uid', passportCall('jwt'), authorization('admin'), deleteUser)
 
 export default router;

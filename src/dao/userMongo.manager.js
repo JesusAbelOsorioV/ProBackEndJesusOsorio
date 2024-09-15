@@ -20,6 +20,10 @@ export default class UserManagerMongo{
     async getUserByEmail(email){
         return this.userModel.find((user) => user.email === email);
     }
+
+    async delateUser(uid){
+        return this.userModel.deleteOne(uid)
+    }
     async updateUser(uid, updateUser){
         return this.userModel.updateOne(uid, {$set: updateUser})
     }

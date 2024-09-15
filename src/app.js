@@ -18,6 +18,7 @@ import swaggerJsDoc from 'swagger-jsdoc'
 import swaggerUiExpress from 'swagger-ui-express'
 import { loggerMidw } from './middlewares/logger.middleware.js'
 import { swaggerOptions } from './config/swagger.config.js'
+import { inactUserProcess } from './utils/inactiveUchilPros.js'
 const app = express();
 
 const { port } = objectConfig
@@ -43,6 +44,8 @@ app.use(handleErrors)
 app.engine('hbs', handlebars.engine({ extname: '.hbs'}));
 app.set('views', __dirname+'/views')
 app.set('view engine', 'hbs')
+
+inactUserProcess()
 
 connectDB();
 
