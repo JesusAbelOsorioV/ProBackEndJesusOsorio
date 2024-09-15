@@ -1,9 +1,9 @@
 import { fork } from "child_process";
 import { logger } from "./logger.js";
-import { __dirname } from "../utils.js";
+import __dirname from "../utils.js";
 
 export const inactUserProcess = () => {
-    const childScript = `${__dirname}/utils/removeInacUsers.js`;
+    const childScript = `${__dirname}/removeInacUsers.js`;
     const inactiveUsersChild = fork(childScript);
 
     inactiveUsersChild.on('message', (result) => {
