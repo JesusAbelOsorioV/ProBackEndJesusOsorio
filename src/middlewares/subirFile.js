@@ -1,7 +1,7 @@
 import multer from "multer";
 import fs from 'fs';
 import path from "path";
-import { __dirname } from "../utils.js";
+import __dirname from "../utils.js";
 
 const folders = {
     profile: 'profiles',
